@@ -1,6 +1,6 @@
 #include <stdio.h>
 #define ASIGNATURAS 3
- 
+ //gff
 typedef struct {
     float calificaciones[ASIGNATURAS];
     float promedio;
