@@ -96,4 +96,30 @@ int leer_calificaciones(int est, Estudiante *alumnos) {
     }
     return 0;
 }
+void mostrar_resultados(int est, Estudiante *alumnos, Asignatura *materias) {
+    printf("\n--- Resultados ---\n");
+    for (int i = 0; i < est; i++) {
+        printf("Estudiante %d -> Promedio: %.2f | Max: %.2f | Min: %.2f\n",
+               i+1, alumnos[i].promedio, alumnos[i].max, alumnos[i].min);
+    }
+    for (int j = 0; j < ASIGNATURAS; j++) {
+        printf("Asignatura %d -> Promedio: %.2f | Max: (%.2f, Estudiante %d) | Min: (%.2f, Estudiante %d) | Aprobados: %d | Reprobados: %d\n",
+               j+1, materias[j].promedio, materias[j].max, materias[j].estMax,
+               materias[j].min, materias[j].estMin, materias[j].aprobados, materias[j].reprobados);
+    }
+}
+
+int main(void) {
+    int estudiantes = leer_estudiantes(5);
+
+    Estudiante alumnos[estudiantes];
+    Asignatura materias[ASIGNATURAS];
+
+    leer_calificaciones(estudiantes, alumnos);
+    calcular_por_estudiante(estudiantes, alumnos);
+    calcular_por_asignatura(estudiantes, alumnos, materias);
+    mostrar_resultados(estudiantes, alumnos, materias);
+
+    return 0;
+}
 
