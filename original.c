@@ -32,4 +32,22 @@ void calcular_por_estudiante(int est, Estudiante *alumnos) {
     }
 }
 
+void calcular_por_asignatura(int est, Estudiante *alumnos, Asignatura *materias) {
+    for (int j = 0; j < ASIGNATURAS; j++) {
+        float suma = 0.0f;
+        materias[j].max = alumnos[0].calificaciones[j];
+        materias[j].min = alumnos[0].calificaciones[j];
+        materias[j].estMax = 1;
+        materias[j].estMin = 1;
+        materias[j].aprobados = materias[j].reprobados = 0;
+        for (int i = 0; i < est; i++) {
+            float v = alumnos[i].calificaciones[j];
+            suma += v;
+            if (v > materias[j].max) { materias[j].max = v; materias[j].estMax = i+1; }
+            if (v < materias[j].min) { materias[j].min = v; materias[j].estMin = i+1; }
+            if (v >= 6.0f) materias[j].aprobados++; else materias[j].reprobados++;
+        }
+        materias[j].promedio = suma / est;
+    }
+}
 
