@@ -50,4 +50,50 @@ void calcular_por_asignatura(int est, Estudiante *alumnos, Asignatura *materias)
         materias[j].promedio = suma / est;
     }
 }
+void limpiar_buffer(void) {
+    int c;
+    while ((c = getchar()) != EOF && c != '\n');
+}
+
+int leer_estudiantes(int defecto) {
+    int estudiantes, r;
+    do {
+        printf("Numero por defecto de estudiantes: %d\n", defecto);
+        printf("Ingrese nuevo numero de estudiantes (0 para usar %d): ", defecto);
+        r = scanf("%d", &estudiantes);
+        if (r != 1) {
+            printf("Entrada invalida. Debe ser un numero.\n");
+            limpiar_buffer();
+            estudiantes = -1;
+        } else {
+            if (estudiantes == 0) estudiantes = defecto;
+            if (estudiantes <= 0) {
+                printf("Valor invalido. Intente otra vez.\n");
+            }
+        }
+    } while (estudiantes <= 0);
+    return estudiantes;
+}
+
+int leer_calificaciones(int est, Estudiante *alumnos) {
+    for (int i = 0; i < est; i++) {
+        for (int j = 0; j < ASIGNATURAS; j++) {
+            float v;
+            int r;
+            do {
+                printf("Ingrese la calificacion del estudiante %d en la asignatura %d (0-10): ", i+1, j+1);
+                r = scanf("%f", &v);
+                if (r != 1) {
+                    printf("Entrada invalida. Debe ser un numero.\n");
+                    limpiar_buffer();
+                    v = -1.0f;
+                } else if (v < 0.0f || v > 10.0f) {
+                    printf("Valor fuera de rango. Intente otra vez.\n");
+                }
+            } while (v < 0.0f || v > 10.0f);
+            alumnos[i].calificaciones[j] = v;
+        }
+    }
+    return 0;
+}
 
